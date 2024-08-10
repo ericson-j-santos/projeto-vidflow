@@ -34,3 +34,28 @@ async function buscarEMostrarVideos() {
 }
 
 buscarEMostrarVideos()
+
+const barraDePesquisa = document.querySelector(".pesquisar__input") // Seleciona a barra de pesquisa na tela
+
+barraDePesquisa.addEventListener("input", filtraPesquisa) // Adiciona um evento de input na barra de pesquisa
+
+function filtrarPesquisa() {
+    const videos = document.querySelectorAll(".videos__item") // Seleciona todos os vídeos exibidos na tela
+    if (barraDePesquisa.value != "")
+}
+
+
+// barraDePesquisa.addEventListener('input', async (evento) => { // Adiciona um evento de input na barra de pesquisa
+//     const termoDeBusca = evento.target.value // Pega o valor digitado na barra de pesquisa
+//     containerVideos.innerHTML = '' // Limpa o container de vídeos na tela
+//     await buscarEMostrarVideos() // Busca e exibe os vídeos na tela
+//     const videos = document.querySelectorAll('.videos__item') // Seleciona todos os vídeos exibidos na tela
+//     videos.forEach((video) => { // Para cada vídeo exibido na tela
+//         const tituloDoVideo = video.querySelector('.titulo-video').textContent // Pega o título do vídeo
+//         const descricaoDoVideo = video.querySelector('.titulo-canal').textContent // Pega a descrição do vídeo
+//         if (!tituloDoVideo.includes(termoDeBusca) && !descricaoDoVideo.includes(termoDeBusca)) { // Se o termo de busca não estiver no título e na descrição do vídeo
+//             video.style.display = 'none' // Esconde o vídeo da tela
+//         } // Fim do if
+//     }) // Fim do forEach
+
+// })
