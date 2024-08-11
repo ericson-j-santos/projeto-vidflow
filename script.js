@@ -31,7 +31,7 @@ async function buscarEMostrarVideos() {
                     <img class="img-canal" src="${video.imagem}" alt="logo do Canal">
                     <h3 class="titulo-video">${video.titulo}</h3>
                     <p class="titulo-canal">${video.descricao}</p>
-                    <p class="categoria" hidden>${video.categoria}</p>
+                    <p class="categoria" hidden>${video.categoria}</p> 
                     </div>
                 </li>
             `; // Adiciona o vídeo na tela 
@@ -79,6 +79,13 @@ botaoCategoria.forEach((botao) => { // Para cada botão de categoria na tela
 function filtrarPorCategoria(filtro) {
     const videos = document.querySelectorAll('.videos__item') // Seleciona todos os vídeos exibidos na tela
     for (let video of videos) {
+        let categoria = video.querySelector('.categoria').textContent.toLocaleLowerCase() // Pega a categoria do vídeo e converte para minúsculo
+        let valorFiltro = filtro.toLowerCase() // Converte o valor do filtro para minúsculo
 
+        if (!categoria.includes(valorFiltro) && valorFiltro != 'tudo') { // Se a categoria do vídeo NÃO contém o valor do filtro e o valor do filtro é diferente de 'tudo'
+            video.style.display = 'none' // Esconde o vídeo da tela aplicando o display none na propriedade style do vídeo
+        } else {
+            video.style.display = 'block' // Se a categoria do vídeo CONTÉM o valor do filtro ou o valor do filtro é igual a 'tudo', exibe o vídeo na tela aplicando o display block na propriedade style do vídeo 
+        }
     }
 }
