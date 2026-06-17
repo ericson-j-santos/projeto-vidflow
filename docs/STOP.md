@@ -1,0 +1,3 @@
+# Stop
+
+Encerrar incremento atual.
