@@ -1,0 +1,65 @@
+name: Deploy - GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: true
+
+jobs:
+  validar:
+    name: Validar publicação estática
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validar index.html
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ ! -f "index.html" ]; then
+            echo "::error::index.html não encontrado na raiz."
+            exit 1
+          fi
+
+      - name: Validar ausência de arquivos sensíveis
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if find . \( -name ".env" -o -name "*.pem" -o -name "*.key" -o -name "credentials.json" \) -not -path "./.git/*" -print -quit | grep -q .; then
+            echo "::error::Arquivo sensível encontrado."
+            exit 1
+          fi
+
+  deploy:
+    name: Publicar GitHub Pages
+    runs-on: ubuntu-latest
+    needs: validar
+
+    environment:
+      name: github-pages
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload artifact Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy Pages
+        uses: actions/deploy-pages@v4
